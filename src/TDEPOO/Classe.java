@@ -2,11 +2,13 @@ package TDEPOO;
 
 public class Classe {
     /*
-    Essa classe é responsavel pelas classes que estárão disponivveis ao jogador no começo de sua jornada.
-    Sub-classes parra cada tipo de classe são uma boa ideia.
+    A classe Classe conterá os atributs
     */
 
     // Atributos
+    private String nome;
+    private int forca;
+    private int inteligencia;
 
     // Construtor
 

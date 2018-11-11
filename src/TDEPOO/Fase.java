@@ -6,6 +6,8 @@ public class Fase {
     */
 
     // Atributos
+    private String local;
+    private double chanceEncontro;
 
     // Construtor
 

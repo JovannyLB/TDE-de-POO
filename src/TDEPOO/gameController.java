@@ -1,12 +1,17 @@
 package TDEPOO;
 
+import java.util.ArrayList;
+
 public class gameController {
     /*
-    Ira controlar o jogo totalemente, essa é a classe responsável por listar as fases, itens, classes e monstros, tirar ou dar pontos de vida ao jogador ou aos monstros,
-    guiar o jogador pelas fases, dropar os itens no chão e aumentar o nivel do jogador.
+    gameController terá um método que cria um montro aleatório e um item aleatório na criação de fases do main
+    Criar um menu
     */
 
     // Atributos
+    private ArrayList<String> racas;
+    private ArrayList<Item> loot;
+    private ArrayList<String> locais;
 
     // Construtor
 

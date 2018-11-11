@@ -1,5 +1,7 @@
 package TDEPOO;
 
+import java.util.ArrayList;
+
 public class Monstro {
     /*
     Essa classe é responsavel pelos monstros, ela determinara se o monstro é um boss, e será conterá as informações de vida, itens, dano, etc...
@@ -7,6 +9,9 @@ public class Monstro {
     */
 
     // Atributos
+    private boolean boss;
+    private int vida;
+    private String raca;
 
     // Construtor
 
