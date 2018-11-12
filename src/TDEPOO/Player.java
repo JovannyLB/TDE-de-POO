@@ -5,35 +5,42 @@ import java.util.Scanner;
 
 public class Player {
     // Atributos
+        // Atributos base
     private String nomePlayer;
     private int levelPlayer;
 
+        // Atributos itens
     private ArrayList<Item> inventario; // Contém os itens carregados pelo player
     private Item itemArmadura;          // Contém o item de armadura que o player atualmente está usando
     private Item itemAtaque;            // Contém o item de ataque que o player atualmente está usando
     private Item itemDefesa;            // Contém o item de defesa que o player atualmente está usando
 
+        // Classe
     private Classe classe;              // Determina os atributos adicionais do player
 
+        // Atributos de atributos
     private int forca;                  // Dano fisico
     private int inteligencia;           // Dano magico
     private int destreza;               // Chance de desviar dos ataques
     private int vitalidade;             // Aumenta a vida do jogador
 
+        // Atributos de vida
     private int vidaTotal;              // Contém a vida total do player
     private int vidaAtual;              // Contém a vida atual do player
 
+        // Atributos de combate
     private int ataque;                 // Dano que o player causará no inimigo caso ataque
     private int defesa;                 // Dano removido do ataque do inimigo caso jogador defenda
 
     // Construtor
     public Player(String nomePlayer, Classe classe) {
         this.nomePlayer = nomePlayer;
+        this.levelPlayer = 0;
         this.classe = classe;
         this.inventario = new ArrayList<>();                // Cria o array de inventário
-        this.itemArmadura = null;
         this.itemAtaque = classe.getItemDeAtaqueInicial();  // Atribui o item inicial da classe ao item de player
         this.itemDefesa = classe.getItemDeDefesaInicial();  // ||
+        this.itemArmadura = classe.getItemDeArmaduraInicial();// ||
         this.forca = classe.getForcaAddC();                 // Atribui o atributo da classe ao player
         this.inteligencia = classe.getInteligenciaAddC();   // ||
         this.destreza = classe.getDestrezaAddC();           // ||
@@ -45,6 +52,7 @@ public class Player {
     }
 
     // Métodos
+        // Métodos de gameplay
     public void updatePlayer() {    // Atualiza os atributos
         this.forca = classe.getForcaAddC() + itemAtaque.getForcaAddI() + itemDefesa.getForcaAddI() + itemArmadura.getForcaAddI();
         this.inteligencia = classe.getInteligenciaAddC() + itemAtaque.getInteligenciaAddI() + itemDefesa.getInteligenciaAddI() + itemArmadura.getInteligenciaAddI();
@@ -57,7 +65,7 @@ public class Player {
     }
 
     public void guardarPocao(Item pocaoParaGuardar) {   // Guarda poções no inventário do player
-        if (this.inventario.size() == 2) {
+        if (this.inventario.size() < 2) {
             if (pocaoParaGuardar.isItemPocao()) {
                 this.addInventario(pocaoParaGuardar);
             } else {
@@ -155,6 +163,42 @@ public class Player {
         }
     }
 
+        // Métodos para os menus
+    public void mostrarAtributos(){ // Imprime os seus atributos
+        System.out.println("ATRIBUTOS----------------");
+        System.out.println("Vida:           " + this.getVidaAtual() + "/" + getVidaTotal());
+        System.out.println("Força:          " + this.getForca());
+        System.out.println("Inteligência:   " + this.getInteligencia());
+        System.out.println("Destreza:       " + this.getDestreza());
+        System.out.println("Vitalidade:     " + this.getVitalidade());
+        System.out.println("Poder de ataque:" + this.getAtaque());
+        System.out.println("Poder de defesa:" + this.getDefesa());
+        System.out.println("-------------------------");
+    }
+
+    public void mostrarItens(){ // Imprime os itens equipados pelo player
+        System.out.println("ITENS EQUIPADOS----------");
+        System.out.println("Armadura:           " + this.getItemArmadura().getNomeItem() + ", " + this.getItemArmadura().getDescricaoItem());
+        System.out.println("Item de ataque:     " + this.getItemAtaque().getNomeItem() + ", " + this.getItemAtaque().getDescricaoItem());
+        System.out.println("Item de defesa:     " + this.getItemDefesa().getNomeItem() + ", " + this.getItemDefesa().getDescricaoItem());
+        System.out.println("-------------------------");
+    }
+
+    public void mostrarInventario(){
+        System.out.println("INVENTÁRIO---------------");
+        try {
+            System.out.println("Poção 1: " + this.inventario.get(0).getNomeItem());
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Poção 1: Vazio");
+        }
+        try {
+            System.out.println("Poção 2: " + this.inventario.get(1).getNomeItem());
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Poção 2: Vazio");
+        }
+        System.out.println("-------------------------");
+    }
+
     // Get e Set
     public String getNomePlayer() {
         return nomePlayer;
@@ -162,6 +206,10 @@ public class Player {
 
     public void setNomePlayer(String nomePlayer) {
         this.nomePlayer = nomePlayer;
+    }
+
+    public void setInventario(ArrayList<Item> inventario) {
+        this.inventario = inventario;
     }
 
     public int getLevelPlayer() {

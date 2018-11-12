@@ -2,26 +2,32 @@ package TDEPOO;
 
 public class Classe {
     // Atributos
+        // Atributos base
     private String nomeClasse;
 
+        // Atributos itens
     private Item itemDeDefesaInicial;   // Item de defesa inicial para o player
     private Item itemDeAtaqueInicial;   // Item de ataque inicial para o player
+    private Item itemDeArmaduraInicial; // Item de armadura inicial para o player
 
+        // Atributos de atributos
     private int forcaAddC;              // Força adicional nos atributos do player
     private int inteligenciaAddC;       // Inteligencia adicinal nos atributos do player
     private int destrezaAddC;           // Destreza adicional nos atributos do player
     private int vitalidadeAddC;         // Vitalidade adicional nos atributos do player
 
+        // Atributos de tipo
     private int tipoDeArma;             // Determina o tipo de arma ultilizada (1 - Arco, 2 - Espada, 3 - Cajado)
     private boolean podeUsarArco;       // Determina se a classe pode ultilizar um arco
     private boolean podeUsarEspada;     // Determina se a classe pode ultilizar uma espada
     private boolean podeUsarCajado;     // Determina se a classe pode ultilizar um cajado
 
     // Construtor
-    public Classe(String nomeClasse, Item itemDeDefesaInicial, Item itemDeAtaqueInicial, int forcaAddC, int inteligenciaAddC, int destrezaAddC, int vitalidadeAddC, int tipoDeArma) {
+    public Classe(String nomeClasse, Item itemDeDefesaInicial, Item itemDeAtaqueInicial, Item itemDeArmaduraInicial, int forcaAddC, int inteligenciaAddC, int destrezaAddC, int vitalidadeAddC, int tipoDeArma) {
         this.nomeClasse = nomeClasse;
         this.itemDeDefesaInicial = itemDeDefesaInicial;
         this.itemDeAtaqueInicial = itemDeAtaqueInicial;
+        this.itemDeArmaduraInicial = itemDeArmaduraInicial;
         this.forcaAddC = forcaAddC;
         this.inteligenciaAddC = inteligenciaAddC;
         this.destrezaAddC = destrezaAddC;
@@ -135,5 +141,13 @@ public class Classe {
 
     public void setPodeUsarCajado(boolean podeUsarCajado) {
         this.podeUsarCajado = podeUsarCajado;
+    }
+
+    public Item getItemDeArmaduraInicial() {
+        return itemDeArmaduraInicial;
+    }
+
+    public void setItemDeArmaduraInicial(Item itemDeArmaduraInicial) {
+        this.itemDeArmaduraInicial = itemDeArmaduraInicial;
     }
 }

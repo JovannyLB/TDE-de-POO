@@ -2,30 +2,35 @@ package TDEPOO;
 
 public class Item {
     // Atributos
+        // Atributos base
     private String nomeItem;
     private String descricaoItem;
 
+        // Atributos de tipo de item
     private int tipoItem;           // Determina o tipo de item (1 - Armadura, 2 - Defesa, 3 - Ataque, 4 - Poção);
     private boolean itemDeArmadura; // Um item passivo que o player equipara para se cobrir
     private boolean itemDeDefesa;   // Um item passivo que o player equipara para se defender
     private boolean itemDeAtaque;   // Um item passivo que o player equipara para atacar
     private boolean itemPocao;      // Um item ativo que o jogador usará para se recuperar, o mesmo será destruido no processo
 
+        // Atributos de tipo de item de ataque
     private int tipoItemAtaque;     // Determina o tipo de item de ataque (1 - Arco, 2 - Espada, 3 - Cajado)
     private boolean itemArco;
     private boolean itemEspada;
     private boolean itemCajado;
 
+        // Atributos de atributos
     private int forcaAddI;          // Força adicional nos atributos do player referindo a um item magico/encantado
     private int inteligenciaAddI;   // Inteligencia adicinal nos atributos do player referindo a um item magico/encantado
     private int destrezaAddI;       // Destreza adicional nos atributos do player referindo a um um item magico/encantado
     private int vitalidadeAddI;     // Vitalidade adicional nos atributos do player referindo a um item magico/encantado
 
+        // Atributos de combate
     private int vidaAddI;           // Vida recuperada referindo a uma poção
-
     private int ataqueAddI;         // Ataque adicional referindo a um item de ataque
     private int defesaAddI;         // Defesa adicional referindo a um item de defesa
 
+        // Atributos de durabilidade
     private int durabilidadeTotal;       // Determina a "vida" do item antes do mesmo ser destruido, mostra o total
     private int durabilidadeAtual;       // Determina a "vida" do item antes do mesmo ser destruido, mostra o atual
 
@@ -61,22 +66,29 @@ public class Item {
                 break;
         }
         this.tipoItemAtaque = tipoItemAtaque;
-        switch (tipoItemAtaque) {
-            case 1:
-                this.itemArco = true;
-                this.itemEspada = false;
-                this.itemCajado = false;
-                break;
-            case 2:
-                this.itemArco = false;
-                this.itemEspada = true;
-                this.itemCajado = false;
-                break;
-            case 3:
-                this.itemArco = false;
-                this.itemEspada = false;
-                this.itemCajado = true;
-                break;
+        if (this.itemDeAtaque) {
+            switch (tipoItemAtaque) {
+                case 0:
+                    this.itemArco = false;
+                    this.itemEspada = false;
+                    this.itemCajado = false;
+                    break;
+                case 1:
+                    this.itemArco = true;
+                    this.itemEspada = false;
+                    this.itemCajado = false;
+                    break;
+                case 2:
+                    this.itemArco = false;
+                    this.itemEspada = true;
+                    this.itemCajado = false;
+                    break;
+                case 3:
+                    this.itemArco = false;
+                    this.itemEspada = false;
+                    this.itemCajado = true;
+                    break;
+            }
         }
         this.forcaAddI = forcaAddI;
         this.inteligenciaAddI = inteligenciaAddI;

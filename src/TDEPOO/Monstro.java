@@ -1,26 +1,18 @@
 package TDEPOO;
 
-import java.util.ArrayList;
-
 public class Monstro {
-    /*
-    Essa classe é responsavel pelos monstros, ela determinara se o monstro é um boss, e será conterá as informações de vida, itens, dano, etc...
-    Sub-classe para monstros normais e boss são uma boa ideia.
-    */
-
     // Atributos
     private boolean boss; // Definirá se o boss é um boss ou não
     private String raca;  // Raça
-    private Item drop;    // Item dropável do monstro             ---->             [if(!= boss){ lore == null}]
-    private String lore;  // Descrição/Lore somente existente se o monstro for Boss [if(!= boss){ lore == null}]
+    private Item drop;    // Item dropável do monstro             ---->             [if(!= boss){ drop = null}]
+    private String lore;  // Descrição/Lore somente existente se o monstro for Boss [if(!= boss){ lore = null}]
 
-    // Atributos de combate
+        // Atributos de combate
     private int vida;     // Vida do monstro
     private int ataque;   // Dano Fisico do monstro
     private int defesa;   // Defesa do monstro
 
     // Construtor
-
     public Monstro(boolean boss, String raca, Item drop, String lore, int vida, int ataque, int defesa) {
         this.boss = boss;
         this.raca = raca;

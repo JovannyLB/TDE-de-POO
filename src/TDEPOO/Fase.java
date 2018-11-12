@@ -3,10 +3,6 @@ package TDEPOO;
 import java.util.ArrayList;
 
 public class Fase {
-    /*
-    Essa classe é responsavel pela fase, ela ira guardar as informações de monstros, bosses e o nivel da mesma.
-    */
-
     // Atributos
     private String local;
     private ArrayList<Monstro> monstros;  // Array de monstros comuns
