@@ -31,8 +31,8 @@ public class Main {
         gc1.setPlayer(player1);
         player1.guardarPocao(pocao1);
         player1.guardarPocao(pocao1);
+        player1.guardarPocao(pocao1);   
         player1.setVidaAtual(50);
-        player1.usarPocao(1);
 
         while(true){
             gc1.gameplayLoop();

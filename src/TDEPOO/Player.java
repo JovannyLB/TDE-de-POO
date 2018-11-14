@@ -23,6 +23,12 @@ public class Player {
     private int inteligencia;           // Dano magico
     private int destreza;               // Chance de desviar dos ataques
     private int vitalidade;             // Aumenta a vida do jogador
+    private int totalBonusF;
+    private int totalBonusI;
+    private int totalBonusD;
+    private int totalBonusV;
+    private int totalBonusA;
+    private int totalBonusDef;
 
         // Atributos de vida
     private int vidaTotal;              // Contém a vida total do player
@@ -49,19 +55,94 @@ public class Player {
         this.vidaAtual = vidaTotal;                         // A vida inicial é igual a vida total
         this.ataque = itemAtaque.getAtaqueAddI() + forca;   // Atribui o ataque do item de ataque mais o bonus de força
         this.defesa = itemDefesa.getDefesaAddI();           // Atribui a defesa do item
+        this.totalBonusF = 0;
+        this.totalBonusI = 0;
+        this.totalBonusD = 0;
+        this.totalBonusV = 0;
+        this.totalBonusA = 0;
+        this.totalBonusDef = 0;
     }
 
     // Métodos
         // Métodos de gameplay
     public void updatePlayer() {    // Atualiza os atributos
-        this.forca = classe.getForcaAddC() + itemAtaque.getForcaAddI() + itemDefesa.getForcaAddI() + itemArmadura.getForcaAddI();
-        this.inteligencia = classe.getInteligenciaAddC() + itemAtaque.getInteligenciaAddI() + itemDefesa.getInteligenciaAddI() + itemArmadura.getInteligenciaAddI();
-        this.destreza = classe.getDestrezaAddC() + itemAtaque.getDestrezaAddI() + itemDefesa.getDestrezaAddI() + itemArmadura.getDestrezaAddI();
-        this.vitalidade = classe.getVitalidadeAddC() + itemAtaque.getVitalidadeAddI() + itemDefesa.getVitalidadeAddI() + itemArmadura.getVitalidadeAddI();
+        // Reseta os bonus
+        this.totalBonusF = 0;
+        this.totalBonusI = 0;
+        this.totalBonusD = 0;
+        this.totalBonusV = 0;
+        this.totalBonusA = 0;
+        this.totalBonusDef = 0;
+
+        // Cria o total de bonus de força
+        try {
+            totalBonusF += itemAtaque.getForcaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusF += itemDefesa.getForcaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusF += itemArmadura.getForcaAddI();
+        } catch (NullPointerException e){ }
+
+        // Cria o total de bonus de inteligencia
+        try {
+            totalBonusI += itemAtaque.getInteligenciaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusI += itemDefesa.getInteligenciaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusI += itemArmadura.getInteligenciaAddI();
+        } catch (NullPointerException e){ }
+
+        // Cria o total de bonus de destreza
+        try {
+            totalBonusD += itemAtaque.getDestrezaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusD += itemDefesa.getDestrezaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusD += itemArmadura.getDestrezaAddI();
+        } catch (NullPointerException e){ }
+
+        // Cria o bonus de vitalidade
+        try {
+            totalBonusV += itemAtaque.getVitalidadeAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusV += itemDefesa.getVitalidadeAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusV += itemArmadura.getVitalidadeAddI();
+        } catch (NullPointerException e){ }
+
+        this.forca = classe.getForcaAddC() + totalBonusF;
+        this.inteligencia = classe.getInteligenciaAddC() + totalBonusI;
+        this.destreza = classe.getDestrezaAddC() + totalBonusD;
+        this.vitalidade = classe.getVitalidadeAddC() + totalBonusV;
 
         this.vidaTotal = 100 + (vitalidade * 10);
-        this.ataque = itemAtaque.getAtaqueAddI() + itemArmadura.getAtaqueAddI() + forca;
-        this.defesa = itemDefesa.getDefesaAddI() + itemArmadura.getDefesaAddI();
+
+        // Cria o bonus de ataque
+        try {
+            totalBonusA += itemAtaque.getAtaqueAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusA += itemArmadura.getAtaqueAddI();
+        } catch (NullPointerException e){ }
+
+        // Criar o bonus de defesa
+        try {
+            totalBonusDef += itemDefesa.getDefesaAddI();
+        } catch (NullPointerException e){ }
+        try {
+            totalBonusDef += itemArmadura.getDefesaAddI();
+        } catch (NullPointerException e){ }
+
+        this.ataque = totalBonusA + forca;
+        this.defesa = totalBonusDef;
     }
 
     public void guardarPocao(Item pocaoParaGuardar) {   // Guarda poções no inventário do player
@@ -177,14 +258,54 @@ public class Player {
     }
 
     public void mostrarItens(){ // Imprime os itens equipados pelo player
+        Scanner scanner = new Scanner(System.in);
         System.out.println("ITENS EQUIPADOS----------");
-        System.out.println("Armadura:           " + this.getItemArmadura().getNomeItem() + ", " + this.getItemArmadura().getDescricaoItem());
-        System.out.println("Item de ataque:     " + this.getItemAtaque().getNomeItem() + ", " + this.getItemAtaque().getDescricaoItem());
-        System.out.println("Item de defesa:     " + this.getItemDefesa().getNomeItem() + ", " + this.getItemDefesa().getDescricaoItem());
+        try {
+            System.out.println("Armadura:           " + this.getItemArmadura().getNomeItem() + ", " + this.getItemArmadura().getDescricaoItem());
+        } catch (NullPointerException e){
+            System.out.println("Armadura:           Vazio");
+        }
+        try {
+            System.out.println("Item de ataque:     " + this.getItemAtaque().getNomeItem() + ", " + this.getItemAtaque().getDescricaoItem());
+        } catch (NullPointerException e){
+            System.out.println("Item de ataque:     Vazio");
+        }
+        try {
+            System.out.println("Item de defesa:     " + this.getItemDefesa().getNomeItem() + ", " + this.getItemDefesa().getDescricaoItem());
+        } catch (NullPointerException e){
+            System.out.println("Item de defesa:     Vazio");
+        }
+        System.out.println("VOCÊ PODE----------------");
+        System.out.println("1 - Desequipar item");
+        System.out.println("2 - Voltar");
         System.out.println("-------------------------");
+
+        System.out.print("Seu comando: ");
+        if (scanner.nextInt() == 1){
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("VOCÊ PODE----------------");
+            System.out.println("1 - Desequipar item de armadura");
+            System.out.println("2 - Desequipar item de ataque");
+            System.out.println("3 - Desequipar item de defesa");
+            System.out.println("-------------------------");
+
+            System.out.print("Seu comando: ");
+            switch (scanner1.nextInt()) {
+                case 1:
+                    this.desequiparItem(1);
+                    break;
+                case 2:
+                    this.desequiparItem(3);
+                    break;
+                case 3:
+                    this.desequiparItem(2);
+                    break;
+            }
+        }
     }
 
     public void mostrarInventario(){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("INVENTÁRIO---------------");
         try {
             System.out.println("Poção 1: " + this.inventario.get(0).getNomeItem());
@@ -196,7 +317,35 @@ public class Player {
         } catch (IndexOutOfBoundsException e){
             System.out.println("Poção 2: Vazio");
         }
+        System.out.println("VOCÊ PODE----------------");
+        System.out.println("1 - Usar poção");
+        System.out.println("2 - Voltar");
         System.out.println("-------------------------");
+        System.out.print("Seu comando: ");
+
+        if (scanner.nextInt() == 1){
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("VOCÊ PODE----------------");
+            System.out.println("1 - Usar a poção 1");
+            System.out.println("2 - Usar a poção 2");
+            System.out.println("-------------------------");
+            System.out.print("Seu comando: ");
+            if (scanner1.nextInt() == 1){
+                try {
+                    System.out.println("Você toma a " + this.getInventario().get(0).getNomeItem() + "!");
+                    this.usarPocao(1);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Não existe uma poção ai...");
+                }
+            } else {
+                try {
+                    System.out.println("Você toma a " + this.getInventario().get(1).getNomeItem() + "!");
+                    this.usarPocao(2);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Não existe uma poção ai...");
+                }
+            }
+        }
     }
 
     // Get e Set
@@ -322,5 +471,53 @@ public class Player {
 
     public void setDefesa(int defesa) {
         this.defesa = defesa;
+    }
+
+    public int getTotalBonusF() {
+        return totalBonusF;
+    }
+
+    public void setTotalBonusF(int totalBonusF) {
+        this.totalBonusF = totalBonusF;
+    }
+
+    public int getTotalBonusI() {
+        return totalBonusI;
+    }
+
+    public void setTotalBonusI(int totalBonusI) {
+        this.totalBonusI = totalBonusI;
+    }
+
+    public int getTotalBonusD() {
+        return totalBonusD;
+    }
+
+    public void setTotalBonusD(int totalBonusD) {
+        this.totalBonusD = totalBonusD;
+    }
+
+    public int getTotalBonusV() {
+        return totalBonusV;
+    }
+
+    public void setTotalBonusV(int totalBonusV) {
+        this.totalBonusV = totalBonusV;
+    }
+
+    public int getTotalBonusA() {
+        return totalBonusA;
+    }
+
+    public void setTotalBonusA(int totalBonusA) {
+        this.totalBonusA = totalBonusA;
+    }
+
+    public int getTotalBonusDef() {
+        return totalBonusDef;
+    }
+
+    public void setTotalBonusDef(int totalBonusDef) {
+        this.totalBonusDef = totalBonusDef;
     }
 }

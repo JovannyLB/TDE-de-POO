@@ -19,7 +19,7 @@ public class gameController {
     public void gameplayLoop(){
         player.updatePlayer();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("--------VOCÊ PODE--------");
+        System.out.println("VOCÊ PODE----------------");
         System.out.println("1 - Batalhar");
         System.out.println("2 - Abrir menu");
         System.out.println("-------------------------");
@@ -36,7 +36,7 @@ public class gameController {
 
     public void abrirMenu(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println  ("-----------MENU----------");
+        System.out.println  ("MENU---------------------");
         System.out.println  ("1 - Mostrar atributos");
         System.out.println  ("2 - Itens equipados");
         System.out.println  ("3 - Inventário");
@@ -65,5 +65,13 @@ public class gameController {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public ArrayList<Fase> getFases() {
+        return fases;
+    }
+
+    public void addFases(Fase fase) {
+        this.fases.add(fase);
     }
 }
