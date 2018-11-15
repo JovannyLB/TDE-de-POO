@@ -21,36 +21,43 @@ public class gameController {
         player.updatePlayer();  // Chama o updatee do jogador
         Scanner scanner = new Scanner(System.in);
 
+        if(this.fases.get(0).isPrimeiraVez()){  // Checa se é a primeira vez que o jogador está entrando na fase, se sim, fala o local
+            System.out.println("Você entra em " + this.fases.get(0).getLocal().toLowerCase() + "!");
+            this.fases.get(0).setPrimeiraVez(false);
+        }
+
         // Remove os monstros se eles morrerem, seus drops vão para o array de loot e se for um boss a fase acaba
         if (this.fases.get(0).getMonstros().get(0).getVida() <= 0 && !this.fases.get(0).getMonstros().get(0).isBoss()) {
-            System.out.println("Você matou o " + this.fases.get(0).getMonstros().get(0).getRaca());
+            System.out.println("Você matou o " + this.fases.get(0).getMonstros().get(0).getRaca() + "!");
             if(this.fases.get(0).getMonstros().get(0).getDrop() != null){   // Se o drop for nulo ele não será adicionado ao array de loot
                 this.fases.get(0).getLoot().add(this.fases.get(0).getMonstros().get(0).getDrop());
             }
             System.out.println("Logo após a morte do " + this.fases.get(0).getMonstros().get(0).getRaca() + " você logo vê outro ser se aproximando!");
             this.fases.get(0).getMonstros().remove(0);  // Remove o monstro da fase
         } else if (this.fases.get(0).getMonstros().get(0).getVida() <= 0) {
-            System.out.println("Você matou " + this.fases.get(0).getMonstros().get(0).getRaca() + ", " + this.fases.get(0).getMonstros().get(0).getLore());
+            System.out.println("Você matou " + this.fases.get(0).getMonstros().get(0).getRaca() + ", " + this.fases.get(0).getMonstros().get(0).getLore() + "!");
             if(this.fases.get(0).getMonstros().get(0).getDrop() != null){   // Se o drop for nulo ele não será adicionado ao array de loot
                 this.fases.get(0).getLoot().add(this.fases.get(0).getMonstros().get(0).getDrop());
             }            mostrarLoot();
             System.out.println("Você então sai da " + this.fases.get(0).getLocal() + ", e vai para sua próxima aventura!");
             this.fases.get(0).getMonstros().remove(0);  // Remove o monstro da fase
             this.fases.remove(0);   // Remove a fase do jogo
-            if(this.fases.get(0).isPrimeiraVez()){  // Checa se é a primeira vez que o jogador está entrando na fase, se sim, fala o local
-                System.out.println("Você entra em " + this.fases.get(0).getLocal().toLowerCase() + "!");
-                this.fases.get(0).setPrimeiraVez(false);
-            }
+            try {
+                if (this.fases.get(0).isPrimeiraVez()) {  // Checa se é a primeira vez que o jogador está entrando na fase, se sim, fala o local
+                    System.out.println("Você entra em " + this.fases.get(0).getLocal().toLowerCase() + "!");
+                    this.fases.get(0).setPrimeiraVez(false);
+                }
+            } catch (IndexOutOfBoundsException e) {}
         }
 
         // Pega o monstro atual da fase atual e mostra para o jogador
         try {
             if (!this.fases.get(0).getMonstros().get(0).isBoss()) { // Mensagem impressa se o monstro a frente for comum
-                System.out.println("Você vê um " + this.fases.get(0).getMonstros().get(0).getRaca() + ", ele está segurando " + this.fases.get(0).getMonstros().get(0).getNomeArma());
-                System.out.println("Ele tem um poder de ataque de " + this.fases.get(0).getMonstros().get(0).getAtaque() + ", e um poder de defesa de " + this.fases.get(0).getMonstros().get(0).getDefesa());
+                System.out.println("Você vê um " + this.fases.get(0).getMonstros().get(0).getRaca() + ", ele está segurando " + this.fases.get(0).getMonstros().get(0).getNomeArma() + "!");
+                System.out.println("Ele tem um poder de ataque de " + this.fases.get(0).getMonstros().get(0).getAtaque() + ", e um poder de defesa de " + this.fases.get(0).getMonstros().get(0).getDefesa() + "!");
             } else {    // Mensagem impressa se o monstro a frente for um boss
-                System.out.println("Você vê " + this.fases.get(0).getMonstros().get(0).getRaca() + ", " + this.fases.get(0).getMonstros().get(0).getLore() + ", ele está segurando " + this.fases.get(0).getMonstros().get(0).getNomeArma());
-                System.out.println("Ele tem um poder de ataque de " + this.fases.get(0).getMonstros().get(0).getAtaque() + ", e um poder de defesa de " + this.fases.get(0).getMonstros().get(0).getDefesa());
+                System.out.println("Você vê " + this.fases.get(0).getMonstros().get(0).getRaca() + ", " + this.fases.get(0).getMonstros().get(0).getLore() + ", ele está segurando " + this.fases.get(0).getMonstros().get(0).getNomeArma() + "!");
+                System.out.println("Ele tem um poder de ataque de " + this.fases.get(0).getMonstros().get(0).getAtaque() + ", e um poder de defesa de " + this.fases.get(0).getMonstros().get(0).getDefesa() + "!");
             }
         } catch (IndexOutOfBoundsException e){  // Condição de vitória, nenhuma fase restante
             System.out.println("Em busca da sua próxima aventura você percebe que já conquistou toda e cada uma delas!");
@@ -210,7 +217,7 @@ public class gameController {
 
     public void batalha(){  // É encarregado das batalhas
         inGame = false;
-        System.out.println("Você engaja o " + this.fases.get(0).getMonstros().get(0).getRaca() + " em batalha");
+        System.out.println("Você engaja o " + this.fases.get(0).getMonstros().get(0).getRaca() + " em batalha!");
         while (!inGame) {
             if (this.fases.get(0).getMonstros().get(0).getVida() <= 0){ // Checa se o monstro está vivo ou não
                 inGame = true;

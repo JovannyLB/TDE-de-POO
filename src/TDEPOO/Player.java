@@ -242,7 +242,7 @@ public class Player {
             System.out.println("Esse item não pode ser equipado...");
             return false;
         }
-        return true;
+        return false;
     }
 
     public void desequiparItem(int itemParaDesequipar){ // Desesquipa um item

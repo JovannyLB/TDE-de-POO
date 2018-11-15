@@ -52,9 +52,9 @@ public class Main {
         Player player1 = new Player("Roberto", classe1);
 
         // Fase
-        Fase fase1 = new Fase("Caverna");
-        Fase fase2 = new Fase("Floresta");
-        Fase fase3 = new Fase("Cu de judas");
+        Fase fase1 = new Fase("caverna");
+        Fase fase2 = new Fase("floresta");
+        Fase fase3 = new Fase("cu de judas");
 
         // Game Controller
         gameController gc1 = new gameController(player1);
