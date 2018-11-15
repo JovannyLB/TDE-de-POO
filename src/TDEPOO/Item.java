@@ -30,16 +30,12 @@ public class Item {
     private int ataqueAddI;         // Ataque adicional referindo a um item de ataque
     private int defesaAddI;         // Defesa adicional referindo a um item de defesa
 
-        // Atributos de durabilidade
-    private int durabilidadeTotal;       // Determina a "vida" do item antes do mesmo ser destruido, mostra o total
-    private int durabilidadeAtual;       // Determina a "vida" do item antes do mesmo ser destruido, mostra o atual
-
     // Construtor
     public Item(String nomeItem, String descricaoItem, int tipoItem, int tipoItemAtaque, int forcaAddI, int inteligenciaAddI, int destrezaAddI, int vitalidadeAddI, int vidaAddI, int ataqueAddI, int defesaAddI) {
         this.nomeItem = nomeItem;
         this.descricaoItem = descricaoItem;
         this.tipoItem = tipoItem;
-        switch (tipoItem) {
+        switch (tipoItem) { // Decide o tipo de item
             case 1:
                 this.itemDeArmadura = true;
                 this.itemDeDefesa = false;
@@ -66,7 +62,7 @@ public class Item {
                 break;
         }
         this.tipoItemAtaque = tipoItemAtaque;
-        if (this.itemDeAtaque) {
+        if (this.itemDeAtaque) {    // Decide o tipo de item de ataque (se não for um item de ataque deixe 0)
             switch (tipoItemAtaque) {
                 case 0:
                     this.itemArco = false;
@@ -97,11 +93,7 @@ public class Item {
         this.vidaAddI = vidaAddI;
         this.ataqueAddI = ataqueAddI;
         this.defesaAddI = defesaAddI;
-        this.durabilidadeTotal = 150;
-        this.durabilidadeAtual = durabilidadeTotal;
     }
-
-    // Métodos
 
     // Get e Set
     public String getNomeItem() {
@@ -246,21 +238,5 @@ public class Item {
 
     public void setDefesaAddI(int defesaAddI) {
         this.defesaAddI = defesaAddI;
-    }
-
-    public int getDurabilidadeTotal() {
-        return durabilidadeTotal;
-    }
-
-    public void setDurabilidadeTotal(int durabilidadeTotal) {
-        this.durabilidadeTotal = durabilidadeTotal;
-    }
-
-    public int getDurabilidadeAtual() {
-        return durabilidadeAtual;
-    }
-
-    public void setDurabilidadeAtual(int durabilidadeAtual) {
-        this.durabilidadeAtual = durabilidadeAtual;
     }
 }

@@ -1,13 +1,13 @@
 package TDEPOO;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
     // Atributos
         // Atributos base
-    private String nomePlayer;
-    private int levelPlayer;
+    private String nomePlayer;          // Guarda o nome do jogador
 
         // Atributos itens
     private ArrayList<Item> inventario; // Contém os itens carregados pelo player
@@ -23,12 +23,12 @@ public class Player {
     private int inteligencia;           // Dano magico
     private int destreza;               // Chance de desviar dos ataques
     private int vitalidade;             // Aumenta a vida do jogador
-    private int totalBonusF;
-    private int totalBonusI;
-    private int totalBonusD;
-    private int totalBonusV;
-    private int totalBonusA;
-    private int totalBonusDef;
+    private int totalBonusF;            // Bonus de força adicionada pelos itens
+    private int totalBonusI;            // Bonus de inteligencia adicionada pelos itens
+    private int totalBonusD;            // Bonus de destreza adicionada pelos itens
+    private int totalBonusV;            // Bonus de vitalidade adicionada pelos itens
+    private int totalBonusA;            // Bonus de ataque adicionado pelos itens
+    private int totalBonusDef;          // Bonus de defesa adicionada pelos itens
 
         // Atributos de vida
     private int vidaTotal;              // Contém a vida total do player
@@ -41,7 +41,6 @@ public class Player {
     // Construtor
     public Player(String nomePlayer, Classe classe) {
         this.nomePlayer = nomePlayer;
-        this.levelPlayer = 0;
         this.classe = classe;
         this.inventario = new ArrayList<>();                // Cria o array de inventário
         this.itemAtaque = classe.getItemDeAtaqueInicial();  // Atribui o item inicial da classe ao item de player
@@ -76,84 +75,97 @@ public class Player {
 
         // Cria o total de bonus de força
         try {
-            totalBonusF += itemAtaque.getForcaAddI();
+            this.totalBonusF += itemAtaque.getForcaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusF += itemDefesa.getForcaAddI();
+            this.totalBonusF += itemDefesa.getForcaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusF += itemArmadura.getForcaAddI();
+            this.totalBonusF += itemArmadura.getForcaAddI();
         } catch (NullPointerException e){ }
 
         // Cria o total de bonus de inteligencia
         try {
-            totalBonusI += itemAtaque.getInteligenciaAddI();
+            this.totalBonusI += itemAtaque.getInteligenciaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusI += itemDefesa.getInteligenciaAddI();
+            this.totalBonusI += itemDefesa.getInteligenciaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusI += itemArmadura.getInteligenciaAddI();
+            this.totalBonusI += itemArmadura.getInteligenciaAddI();
         } catch (NullPointerException e){ }
 
         // Cria o total de bonus de destreza
         try {
-            totalBonusD += itemAtaque.getDestrezaAddI();
+            this.totalBonusD += itemAtaque.getDestrezaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusD += itemDefesa.getDestrezaAddI();
+            this.totalBonusD += itemDefesa.getDestrezaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusD += itemArmadura.getDestrezaAddI();
+            this.totalBonusD += itemArmadura.getDestrezaAddI();
         } catch (NullPointerException e){ }
 
         // Cria o bonus de vitalidade
         try {
-            totalBonusV += itemAtaque.getVitalidadeAddI();
+            this.totalBonusV += itemAtaque.getVitalidadeAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusV += itemDefesa.getVitalidadeAddI();
+            this.totalBonusV += itemDefesa.getVitalidadeAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusV += itemArmadura.getVitalidadeAddI();
+            this.totalBonusV += itemArmadura.getVitalidadeAddI();
         } catch (NullPointerException e){ }
 
-        this.forca = classe.getForcaAddC() + totalBonusF;
-        this.inteligencia = classe.getInteligenciaAddC() + totalBonusI;
-        this.destreza = classe.getDestrezaAddC() + totalBonusD;
-        this.vitalidade = classe.getVitalidadeAddC() + totalBonusV;
+        // Adiciona os bonus de atributos
+        this.forca = classe.getForcaAddC() + this.totalBonusF;
+        this.inteligencia = classe.getInteligenciaAddC() + this.totalBonusI;
+        this.destreza = classe.getDestrezaAddC() + this.totalBonusD;
+        this.vitalidade = classe.getVitalidadeAddC() + this.totalBonusV;
 
-        this.vidaTotal = 100 + (vitalidade * 10);
+        // Atualiza a vida total
+        this.vidaTotal = 100 + (this.vitalidade * 10);
 
         // Cria o bonus de ataque
         try {
-            totalBonusA += itemAtaque.getAtaqueAddI();
+            this.totalBonusA += itemAtaque.getAtaqueAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusA += itemArmadura.getAtaqueAddI();
+            this.totalBonusA += itemArmadura.getAtaqueAddI();
         } catch (NullPointerException e){ }
 
         // Criar o bonus de defesa
         try {
-            totalBonusDef += itemDefesa.getDefesaAddI();
+            this.totalBonusDef += itemDefesa.getDefesaAddI();
         } catch (NullPointerException e){ }
         try {
-            totalBonusDef += itemArmadura.getDefesaAddI();
+            this.totalBonusDef += itemArmadura.getDefesaAddI();
         } catch (NullPointerException e){ }
 
-        this.ataque = totalBonusA + forca;
-        this.defesa = totalBonusDef;
+        // Adiciona os bonus de combate
+        this.ataque = this.totalBonusA + this.forca;
+        this.defesa = this.totalBonusDef;
+
+        // Checa se o jogador está vivo ou morto
+        if(this.vidaAtual <= 0){
+            System.out.println("Você morreu");
+            System.exit(0);
+        }
     }
 
-    public void guardarPocao(Item pocaoParaGuardar) {   // Guarda poções no inventário do player
+    public boolean guardarPocao(Item pocaoParaGuardar) {   // Guarda poções no inventário do player
         if (this.inventario.size() < 2) {
             if (pocaoParaGuardar.isItemPocao()) {
                 this.addInventario(pocaoParaGuardar);
+                System.out.println("Você guarda a " + pocaoParaGuardar.getNomeItem() + "!");
+                return true;
             } else {
                 System.out.println("Você só pode carregar poções!");
+                return false;
             }
         } else {
             System.out.println("Seu inventário está cheio!");
+            return false;
         }
     }
 
@@ -177,29 +189,40 @@ public class Player {
         }
     }
 
-    public void equiparItem(Item itemParaEquipar){  // Equipa um item
+    public boolean equiparItem(Item itemParaEquipar){  // Equipa um item
+        boolean sucesso;
         if (itemParaEquipar.isItemDeArmadura()) {
             if (this.itemArmadura == null) {
                 this.itemArmadura = itemParaEquipar;
+                System.out.println("Você equipa " + itemParaEquipar.getNomeItem() + "!");
+                return true;
             } else {
                 System.out.println("Você já tem uma armadura equipada...");
+                return false;
             }
         }  else if (itemParaEquipar.isItemDeAtaque()){  // 1 - Arco, 2 - Espada, 3 - Cajado
             if (itemParaEquipar.isItemArco() && this.classe.isPodeUsarArco()) {
                 if (this.itemAtaque == null) {
                     this.itemAtaque = itemParaEquipar;
+                    System.out.println("Você equipa " + itemParaEquipar.getNomeItem() + "!");
+                    return true;
                 } else {
                     System.out.println("Você já está segurando um item de ataque...");
+                    return false;
                 }
             } else if (itemParaEquipar.isItemEspada() && this.classe.isPodeUsarEspada()) {
                 if (this.itemAtaque == null) {
                     this.itemAtaque = itemParaEquipar;
+                    System.out.println("Você equipa " + itemParaEquipar.getNomeItem() + "!");
+                    return true;
                 } else {
                     System.out.println("Você já está segurando um item de ataque...");
                 }
             } else if (itemParaEquipar.isItemCajado() && this.classe.isPodeUsarCajado()) {
                 if (this.itemAtaque == null) {
                     this.itemAtaque = itemParaEquipar;
+                    System.out.println("Você equipa " + itemParaEquipar.getNomeItem() + "!");
+                    return true;
                 } else {
                     System.out.println("Você já está segurando um item de ataque...");
                 }
@@ -209,44 +232,57 @@ public class Player {
         } else if (itemParaEquipar.isItemDeDefesa()){
             if (this.itemDefesa == null){
                 this.itemDefesa = itemParaEquipar;
+                System.out.println("Você equipa " + itemParaEquipar.getNomeItem() + "!");
+                return true;
             } else {
                 System.out.println("Você já está segurando um item de defesa...");
+                return false;
             }
+        } else {
+            System.out.println("Esse item não pode ser equipado...");
+            return false;
         }
+        return true;
     }
 
     public void desequiparItem(int itemParaDesequipar){ // Desesquipa um item
-        switch (itemParaDesequipar) {                   // 1 - Armadura, 2 - Defesa, 3 - Ataque
-            case 1:
-                if (this.itemArmadura == null) {
-                    System.out.println("Você já está sem armadura...");
-                } else {
-                    this.itemArmadura = null;
-                    System.out.println("Você tira sua armadura!");
-                }
-                break;
-            case 2:
-                if (this.itemDefesa == null) {
-                    System.out.println("Você já não tem um item de defesa...");
-                } else {
-                    this.itemDefesa = null;
-                    System.out.println("Você larga seu item de defesa!");
-                }
-                break;
-            case 3:
-                if (this.itemAtaque == null){
-                    System.out.println("Você já não tem um item de ataque...");
-                } else {
-                    this.itemAtaque = null;
-                    System.out.println("Você larga seu item de ataque!");
-                }
-                break;
+        try {
+            switch (itemParaDesequipar) {                   // 1 - Armadura, 2 - Defesa, 3 - Ataque
+                case 1:
+                    if (this.itemArmadura == null) {
+                        System.out.println("Você já está sem armadura...");
+                    } else {
+                        this.itemArmadura = null;
+                        System.out.println("Você tira sua armadura!");
+                    }
+                    break;
+                case 2:
+                    if (this.itemDefesa == null) {
+                        System.out.println("Você já não tem um item de defesa...");
+                    } else {
+                        this.itemDefesa = null;
+                        System.out.println("Você larga seu item de defesa!");
+                    }
+                    break;
+                case 3:
+                    if (this.itemAtaque == null) {
+                        System.out.println("Você já não tem um item de ataque...");
+                    } else {
+                        this.itemAtaque = null;
+                        System.out.println("Você larga seu item de ataque!");
+                    }
+                    break;
+            }
+        } catch (InputMismatchException e){
+            System.out.println("Caractere inválido, tente novamente...");
         }
     }
 
         // Métodos para os menus
     public void mostrarAtributos(){ // Imprime os seus atributos
         System.out.println("ATRIBUTOS----------------");
+        System.out.println("Nome:           " + this.getNomePlayer());
+        System.out.println("Classe:         " + this.getClasse().getNomeClasse());
         System.out.println("Vida:           " + this.getVidaAtual() + "/" + getVidaTotal());
         System.out.println("Força:          " + this.getForca());
         System.out.println("Inteligência:   " + this.getInteligencia());
@@ -290,16 +326,23 @@ public class Player {
             System.out.println("-------------------------");
 
             System.out.print("Seu comando: ");
-            switch (scanner1.nextInt()) {
-                case 1:
-                    this.desequiparItem(1);
-                    break;
-                case 2:
-                    this.desequiparItem(3);
-                    break;
-                case 3:
-                    this.desequiparItem(2);
-                    break;
+            try {
+                switch (scanner1.nextInt()) {
+                    case 1:
+                        this.desequiparItem(1);
+                        break;
+                    case 2:
+                        this.desequiparItem(3);
+                        break;
+                    case 3:
+                        this.desequiparItem(2);
+                        break;
+                    default:
+                        System.out.println("Número inválido, tente novamente...");
+                        break;
+                }
+            } catch (InputMismatchException e){
+                System.out.println("Caractere inválido, tente novamente...");
             }
         }
     }
@@ -323,28 +366,38 @@ public class Player {
         System.out.println("-------------------------");
         System.out.print("Seu comando: ");
 
-        if (scanner.nextInt() == 1){
-            Scanner scanner1 = new Scanner(System.in);
-            System.out.println("VOCÊ PODE----------------");
-            System.out.println("1 - Usar a poção 1");
-            System.out.println("2 - Usar a poção 2");
-            System.out.println("-------------------------");
-            System.out.print("Seu comando: ");
-            if (scanner1.nextInt() == 1){
-                try {
-                    System.out.println("Você toma a " + this.getInventario().get(0).getNomeItem() + "!");
-                    this.usarPocao(1);
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Não existe uma poção ai...");
+        try {
+            if (scanner.nextInt() == 1) {
+                Scanner scanner1 = new Scanner(System.in);
+                System.out.println("VOCÊ PODE----------------");
+                System.out.println("1 - Usar a poção 1");
+                System.out.println("2 - Usar a poção 2");
+                System.out.println("3 - Voltar");
+                System.out.println("-------------------------");
+                System.out.print("Seu comando: ");
+                if (scanner1.nextInt() == 1) {
+                    try {
+                        System.out.println("Você toma a " + this.getInventario().get(0).getNomeItem() + "!");
+                        this.usarPocao(1);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Não existe uma poção ai...");
+                    }
+                } else if (scanner1.nextInt() == 2) {
+                    try {
+                        System.out.println("Você toma a " + this.getInventario().get(1).getNomeItem() + "!");
+                        this.usarPocao(2);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Não existe uma poção ai...");
+                    }
+                } else {
+                    System.out.println("Número inválido, tente novamente...");
                 }
             } else {
-                try {
-                    System.out.println("Você toma a " + this.getInventario().get(1).getNomeItem() + "!");
-                    this.usarPocao(2);
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Não existe uma poção ai...");
-                }
+                System.out.println("Número inválido, tente novamente...");
             }
+        } catch (InputMismatchException e){
+            System.out.println("Caractere inválido, tente novamente...");
+
         }
     }
 
@@ -359,14 +412,6 @@ public class Player {
 
     public void setInventario(ArrayList<Item> inventario) {
         this.inventario = inventario;
-    }
-
-    public int getLevelPlayer() {
-        return levelPlayer;
-    }
-
-    public void setLevelPlayer(int levelPlayer) {
-        this.levelPlayer = levelPlayer;
     }
 
     public ArrayList<Item> getInventario() {

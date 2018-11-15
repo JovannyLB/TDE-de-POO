@@ -7,13 +7,17 @@ public class Monstro {
     private Item drop;    // Item dropável do monstro             ---->             [if(!= boss){ drop = null}]
     private String lore;  // Descrição/Lore somente existente se o monstro for Boss [if(!= boss){ lore = null}]
 
-        // Atributos de combate
+    // Atributos de combate
     private int vida;     // Vida do monstro
     private int ataque;   // Dano Fisico do monstro
     private int defesa;   // Defesa do monstro
 
+    // Atributos boolean armas            // Tipo de arma (1 - Espada, 2 - Porrete, 3 - Machado, 4 - Lança, 5 - Adaga)
+    private int tipoArma;
+    private String nomeArma;
+
     // Construtor
-    public Monstro(boolean boss, String raca, Item drop, String lore, int vida, int ataque, int defesa) {
+    public Monstro(boolean boss, String raca, Item drop, String lore, int vida, int ataque, int defesa, int tipoArma) {
         this.boss = boss;
         this.raca = raca;
         this.drop = drop;
@@ -21,18 +25,26 @@ public class Monstro {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
-
-        if (boss == false) {
-
+        switch (tipoArma){
+            case 1:
+                this.nomeArma = "uma espada";
+                break;
+            case 2:
+                this.nomeArma = "um porrete";
+                break;
+            case 3:
+                this.nomeArma = "um machado";
+                break;
+            case 4:
+                this.nomeArma = "uma lança";
+                break;
+            case 5:
+                this.nomeArma = "uma adaga";
+                break;
         }
-
-
     }
 
-    // Métodos
-
     // Get e Set
-
     public boolean isBoss() {
         return boss;
     }
@@ -87,5 +99,21 @@ public class Monstro {
 
     public void setDefesa(int defesa) {
         this.defesa = defesa;
+    }
+
+    public int getTipoArma() {
+        return tipoArma;
+    }
+
+    public void setTipoArma(int tipoArma) {
+        this.tipoArma = tipoArma;
+    }
+
+    public String getNomeArma() {
+        return nomeArma;
+    }
+
+    public void setNomeArma(String nomeArma) {
+        this.nomeArma = nomeArma;
     }
 }

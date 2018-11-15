@@ -52,8 +52,6 @@ public class Classe {
         }
     }
 
-    // Métodos
-
     // Get e Set
     public String getNomeClasse() {
         return nomeClasse;
