@@ -49,7 +49,7 @@ public class Main {
         Classe  classe1 = new Classe("Guerreiro", itemD1, itemA1, itemAr1, 10, 4, 4, 5, 2);
 
         // Player
-        Player player1 = new Player("Roberto", classe1);
+        Player player1 = new Player();
 
         // Fase
         Fase fase1 = new Fase("caverna");
@@ -60,6 +60,8 @@ public class Main {
         gameController gc1 = new gameController(player1);
 
         // Adição final
+        player1.addClasses(classe1);
+
         fase1.addMonstros(monstro11);
         fase1.addMonstros(monstro12);
         fase1.addMonstros(boss1);

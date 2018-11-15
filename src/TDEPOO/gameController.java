@@ -42,6 +42,9 @@ public class gameController {
             System.out.println("Você então sai da " + this.fases.get(0).getLocal() + ", e vai para sua próxima aventura!");
             this.fases.get(0).getMonstros().remove(0);  // Remove o monstro da fase
             this.fases.remove(0);   // Remove a fase do jogo
+            System.out.println("Você subiu de level!");
+            this.player.setLevel(this.player.getLevel() + 1);
+            this.player.setVidaAtual(this.player.getVidaTotal());
             try {
                 if (this.fases.get(0).isPrimeiraVez()) {  // Checa se é a primeira vez que o jogador está entrando na fase, se sim, fala o local
                     System.out.println("Você entra em " + this.fases.get(0).getLocal().toLowerCase() + "!");

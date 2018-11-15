@@ -8,6 +8,8 @@ public class Player {
     // Atributos
         // Atributos base
     private String nomePlayer;          // Guarda o nome do jogador
+    private int idadePlayer;            // Guarda a idade do jogador
+    private int level;                  // Autoexplicativo
 
         // Atributos itens
     private ArrayList<Item> inventario; // Contém os itens carregados pelo player
@@ -16,6 +18,7 @@ public class Player {
     private Item itemDefesa;            // Contém o item de defesa que o player atualmente está usando
 
         // Classe
+    private ArrayList<Classe> classes;  // Lista de classes
     private Classe classe;              // Determina os atributos adicionais do player
 
         // Atributos de atributos
@@ -39,32 +42,75 @@ public class Player {
     private int defesa;                 // Dano removido do ataque do inimigo caso jogador defenda
 
     // Construtor
-    public Player(String nomePlayer, Classe classe) {
-        this.nomePlayer = nomePlayer;
-        this.classe = classe;
+    public Player() {
+        boolean criado = false;
+        while(!criado) {                                    // Cria o personagem
+            try {
+                Scanner scanner = new Scanner(System.in);
+                Scanner scanner1 = new Scanner(System.in);
+                System.out.println("Criação de personagem:");
+                System.out.print("Escreva seu nome: ");
+                this.nomePlayer = scanner.nextLine();
+                System.out.print("Escreva sua idade: ");
+                this.idadePlayer = scanner1.nextInt();
+                criado = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Idade incompatível, tente novamente...");
+            }
+        }
         this.inventario = new ArrayList<>();                // Cria o array de inventário
-        this.itemAtaque = classe.getItemDeAtaqueInicial();  // Atribui o item inicial da classe ao item de player
-        this.itemDefesa = classe.getItemDeDefesaInicial();  // ||
-        this.itemArmadura = classe.getItemDeArmaduraInicial();// ||
-        this.forca = classe.getForcaAddC();                 // Atribui o atributo da classe ao player
-        this.inteligencia = classe.getInteligenciaAddC();   // ||
-        this.destreza = classe.getDestrezaAddC();           // ||
-        this.vitalidade = classe.getVitalidadeAddC();       // ||
         this.vidaTotal = 100 + (vitalidade * 10);           // Atribui o bonus de vitalidade a vida genérica do player
         this.vidaAtual = vidaTotal;                         // A vida inicial é igual a vida total
-        this.ataque = itemAtaque.getAtaqueAddI() + forca;   // Atribui o ataque do item de ataque mais o bonus de força
-        this.defesa = itemDefesa.getDefesaAddI();           // Atribui a defesa do item
         this.totalBonusF = 0;
         this.totalBonusI = 0;
         this.totalBonusD = 0;
         this.totalBonusV = 0;
         this.totalBonusA = 0;
         this.totalBonusDef = 0;
+        this.classes = new ArrayList<>();
+        this.level = 1;
     }
 
     // Métodos
         // Métodos de gameplay
     public void updatePlayer() {    // Atualiza os atributos
+
+        // Escolha de classe e adição dos bonus
+        while (this.classe == null) {
+            System.out.println("Classes: ");
+            try {
+                for (int i = 0; i < this.classes.size(); i++) {
+                    System.out.println((i + 1) + " - " + this.classes.get(i).getNomeClasse());
+                }
+            } catch (NullPointerException e){
+                System.out.println("Nenhuma classe existente...");
+                System.exit(1);
+            }
+            System.out.print("Escolha sua classe: ");
+            boolean classeEscolhida = false;
+            while (!classeEscolhida) {
+                try {
+                    Scanner scanner = new Scanner(System.in);
+                    this.classe = this.classes.get(scanner.nextInt() - 1);
+                    classeEscolhida = true;
+                } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                    System.out.println("Classe inexistente, tente novamente...");
+                    System.out.print("Escolha sua classe: ");
+                }
+            }
+            this.itemAtaque = classe.getItemDeAtaqueInicial();  // Atribui o item inicial da classe ao item de player
+            this.itemDefesa = classe.getItemDeDefesaInicial();  // ||
+            this.itemArmadura = classe.getItemDeArmaduraInicial();// ||
+            this.forca = classe.getForcaAddC();                 // Atribui o atributo da classe ao player
+            this.inteligencia = classe.getInteligenciaAddC();   // ||
+            this.destreza = classe.getDestrezaAddC();           // ||
+            this.vitalidade = classe.getVitalidadeAddC();       // ||
+            this.ataque = itemAtaque.getAtaqueAddI() + forca;   // Atribui o ataque do item de ataque mais o bonus de força
+            this.defesa = itemDefesa.getDefesaAddI();           // Atribui a defesa do item
+            this.vidaTotal = 100 + (this.vitalidade * 10);      // Atribui o bonus de vida
+            this.vidaAtual = this.vidaTotal;                    // Atribui a vida atual a vida total para começar o jogo com vida maxima
+        }
+
         // Reseta os bonus
         this.totalBonusF = 0;
         this.totalBonusI = 0;
@@ -282,6 +328,8 @@ public class Player {
     public void mostrarAtributos(){ // Imprime os seus atributos
         System.out.println("ATRIBUTOS----------------");
         System.out.println("Nome:           " + this.getNomePlayer());
+        System.out.println("Idade:          " + this.getIdadePlayer());
+        System.out.println("Level:          " + this.getLevel());
         System.out.println("Classe:         " + this.getClasse().getNomeClasse());
         System.out.println("Vida:           " + this.getVidaAtual() + "/" + getVidaTotal());
         System.out.println("Força:          " + this.getForca());
@@ -564,5 +612,29 @@ public class Player {
 
     public void setTotalBonusDef(int totalBonusDef) {
         this.totalBonusDef = totalBonusDef;
+    }
+
+    public int getIdadePlayer() {
+        return idadePlayer;
+    }
+
+    public void setIdadePlayer(int idadePlayer) {
+        this.idadePlayer = idadePlayer;
+    }
+
+    public ArrayList<Classe> getClasses() {
+        return classes;
+    }
+
+    public void addClasses(Classe classes) {
+        this.classes.add(classes);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
