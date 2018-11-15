@@ -12,6 +12,8 @@ public class gameController {
     // Atributos
     private ArrayList<Fase> fases;
     private Player player;
+    private boolean inGame = true;
+    private Fase fase1;
 
     // Construtor
 
@@ -23,39 +25,61 @@ public class gameController {
         System.out.println("1 - Batalhar");
         System.out.println("2 - Abrir menu");
         System.out.println("-------------------------");
-
-        System.out.print("Seu comando: ");
-        switch (scanner.nextInt()){
-            case 2:
-                this.abrirMenu();
-                break;
-            default:
-                System.out.println("Número inválido, tente novamente");
-        }
-    }
-
-    public void abrirMenu(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println  ("MENU---------------------");
-        System.out.println  ("1 - Mostrar atributos");
-        System.out.println  ("2 - Itens equipados");
-        System.out.println  ("3 - Inventário");
-        System.out.println  ("-------------------------");
+        System.out.println("Hp:" + player.getVidaAtual() + " / Atk:" + player.getAtaque() + " / Def:" + player.getDefesa());
+        System.out.println("-------------------------");
 
         System.out.print("Seu comando: ");
         switch (scanner.nextInt()){
             case 1:
-                this.player.mostrarAtributos();
+
+            case 2:{
+                this.abrirMenu();
                 break;
-            case 2:
-                this.player.mostrarItens();
-                break;
-            case 3:
-                this.player.mostrarInventario();
-                break;
+                }
             default:
                 System.out.println("Número inválido, tente novamente");
         }
+        System.out.println();
+    }
+
+    public void abrirMenu(){
+        inGame = false;
+        while(inGame == false) {
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println  ("-----------MENU----------");
+            System.out.println  ("1 - Mostrar atributos");
+            System.out.println  ("2 - Itens equipados");
+            System.out.println  ("3 - Inventário");
+            System.out.println  ("4 - Voltar ao jogo");
+            System.out.println  ("-------------------------");
+
+            System.out.print("Seu comando: ");
+            switch (scanner.nextInt()) {
+                case 1:
+                    this.player.mostrarAtributos();
+                    System.out.println();
+                    break;
+                case 2:
+                    this.player.mostrarItens();
+                    System.out.println();
+                    break;
+                case 3:
+                    this.player.mostrarInventario();
+                    System.out.println();
+                    break;
+                case 4:
+                    inGame = true;
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println("Número inválido, tente novamente");
+            }
+        }
+    }
+
+    public void batalhar(){
+
     }
 
     // Get e Set
