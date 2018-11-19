@@ -385,6 +385,8 @@ public class Player {
                     case 3:
                         this.desequiparItem(2);
                         break;
+                    case 4:
+                        break;
                     default:
                         System.out.println("Número inválido, tente novamente...");
                         break;
