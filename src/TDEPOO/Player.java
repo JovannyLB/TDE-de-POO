@@ -371,6 +371,7 @@ public class Player {
             System.out.println("1 - Desequipar item de armadura");
             System.out.println("2 - Desequipar item de ataque");
             System.out.println("3 - Desequipar item de defesa");
+            System.out.println("4 - Voltar");
             System.out.println("-------------------------");
 
             System.out.print("Seu comando: ");
