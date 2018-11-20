@@ -261,12 +261,12 @@ public class gameController {
                             break;
                         }
                         break;
-                    case 2: // A defesa do personagem funciona igualmente a do monstro, dita acima
+                    case 2: // A defesa do personagem funciona igualmente a do monstro, mas um pouco mais efetivo, dita acima
                         System.out.println("Você se prepara para se defeder usando " + this.player.getItemDefesa().getNomeItem().toLowerCase());
                         System.out.println("O " + this.fases.get(0).getMonstros().get(0).getRaca() + " te ataca!");
-                        System.out.println("Ele dá " + (this.fases.get(0).getMonstros().get(0).getAtaque() - (((double) this.player.getDefesa() / 100) * this.fases.get(0).getMonstros().get(0).getAtaque())) + " de dano em você!");
-                        System.out.println("Você defendeu " + ((double) this.player.getDefesa() / 100) * this.fases.get(0).getMonstros().get(0).getAtaque() + " do dano total!");
-                        this.player.setVidaAtual((int) (this.player.getVidaAtual() - this.fases.get(0).getMonstros().get(0).getAtaque() - (((double) this.player.getDefesa() / 100) * this.fases.get(0).getMonstros().get(0).getAtaque())));
+                        System.out.println("Ele dá " + (this.fases.get(0).getMonstros().get(0).getAtaque() - (((double) this.player.getDefesa() / 40) * this.fases.get(0).getMonstros().get(0).getAtaque())) + " de dano em você!");
+                        System.out.println("Você defendeu " + ((double) this.player.getDefesa() / 40) * this.fases.get(0).getMonstros().get(0).getAtaque() + " do dano total!");
+                        this.player.setVidaAtual((int) (this.player.getVidaAtual() - (this.fases.get(0).getMonstros().get(0).getAtaque() - (((double) this.player.getDefesa() / 40) * this.fases.get(0).getMonstros().get(0).getAtaque()))));
                         if (this.player.getVidaAtual() <= 0) {
                             inGame = true;
                             break;
